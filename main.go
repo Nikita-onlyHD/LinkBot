@@ -1,6 +1,7 @@
 package main
 
 import (
+	"link-bot/clients/telegram"
 	"log"
 	"os"
 
@@ -8,9 +9,7 @@ import (
 )
 
 func main() {
-	t := mustToken()
-
-	// tgClient = telegram.New(token)
+	tgClient = telegram.New(mustHost(), mustToken())
 
 	// fetcher = fetcher.New()
 
@@ -29,4 +28,16 @@ func mustToken() string {
 	}
 
 	return token
+}
+
+func mustHost() string {
+	godotenv.Load()
+
+	host := os.Getenv("BOT_HOST")
+
+	if host == "" {
+		log.Fatal("BOT_HOST is not set")
+	}
+
+	return host
 }
